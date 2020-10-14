@@ -9,31 +9,29 @@ import java.util.Scanner;
 
 /**
  * @author 卡卢比
- * @createTime 2020年10月13日 20:32
- * @description
+ * @createTime 2020年10月13日
+ * @description 核心算法，前缀树(字典树)
  */
 public class Application {
-    public static void main(String[] args) {
-//        Scanner scan = new Scanner(System.in);
-//        System.out.println("输入敏感词（多个逗号隔开）, 回车键确认：");
-//        // 判断是否还有输入
-//        while (scan.hasNextLine()) {
-//            String sensitiveWords = scan.nextLine();
-//            TrieNodeBuilder.addWord(sensitiveWords);
-//            TrieNode trieNode = TrieNodeBuilder.build();
-//
-//            System.out.println("输入配置：");
-//        }
-//        scan.close();
+    /**敏感字*/
+    private static String SENSITIVE_WORDS ="abc,ds";
+    /**文本*/
+    private static String TEXT = "ds sdgffgfg sdds abc  dfdfabc abcfff sdsabc abc abdc ";
 
-        Map<String,String> rules = new HashMap<>();
-//        rules.put("abc","妈妈咪");
+    public static void main(String[] args) {
+        // 创建替换规则
         HandleRules handleRules = new HandleRules();
+        Map<String,String> rules = new HashMap<>();
+        rules.put("abc","妈妈咪");
         handleRules.setReplaceRules(rules);
-        handleRules.setPrefixMatch(true);
-        handleRules.setSuffixMatch(true);
-        SensitiveWordHandler sensitiveWordHandler = new SensitiveWordHandler("abc",handleRules);
-        String res = sensitiveWordHandler.handle("ds sdgffgfg sdds abc  dfdfabc abcfff sdsabc abc abdc");
+        handleRules.setPrefixMatch(false); //开启前缀匹配
+        handleRules.setSuffixMatch(false); //开启后缀匹配
+        //初始化处理器
+        SensitiveWordHandler sensitiveWordHandler = new SensitiveWordHandler(SENSITIVE_WORDS,handleRules);
+        //获取替换结果
+        String res = sensitiveWordHandler.handle(TEXT);
+
+        System.out.println(TEXT);
         System.out.println(res);
     }
 }

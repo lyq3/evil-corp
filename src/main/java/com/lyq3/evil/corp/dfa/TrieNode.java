@@ -5,7 +5,7 @@ import java.util.Map;
 
 /**
  * @author 卡卢比
- * @createTime 2020年10月13日 20:48
+ * @createTime 2020年10月13日
  * @description 前缀树,用于存放敏感词库
  */
 public class TrieNode {

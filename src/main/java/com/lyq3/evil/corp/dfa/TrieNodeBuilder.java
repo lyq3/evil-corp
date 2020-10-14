@@ -5,7 +5,7 @@ import java.util.List;
 
 /**
  * @author 卡卢比
- * @createTime 2020年10月13日 21:06
+ * @createTime 2020年10月13日
  * @description 构建TrieNode
  */
 public class TrieNodeBuilder {

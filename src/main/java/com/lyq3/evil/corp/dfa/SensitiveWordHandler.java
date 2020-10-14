@@ -84,21 +84,31 @@ public class SensitiveWordHandler {
                 begin = position;
                 // 回到树初始节点
                 tempNode = rootNode;
+                //关键字重置
+                sensitiveWord = new StringBuilder();
             } else if (tempNode.isEnd()) {
                 // 发现敏感词， 从begin到position的位置用replacement替换掉
                 sensitiveWord.append(c);
                 //后缀匹配
                 if (handleRules.getSuffixMatch()){
+                    String temStr = "";
                     while (result.length() > 0){
                         char lastChar = result.charAt(result.length() - 1);
                         if (StringUtils.isSymbol(lastChar)){
                             break;
                         }else {
+                            temStr += StringUtils.getAsterisk(1);
                             result.deleteCharAt(result.length()-1);
                         }
                     }
+                    result.append(temStr);
                 }
+                //替换敏感词
                 result.append(handleRules.getReplaceRules().get(sensitiveWord.toString()));
+                position = position + 1;
+                begin = position;
+                tempNode = rootNode;
+                sensitiveWord = new StringBuilder();
                 //前缀匹配
                 if (handleRules.getPrefixMatch()){
                     while (position < text.length()) {
@@ -106,16 +116,14 @@ public class SensitiveWordHandler {
                         if (StringUtils.isSymbol(nextChar)) {
                             break;
                         } else {
+                            result.append(StringUtils.getAsterisk(1));
                             begin += 1;
                             position = begin;
                         }
                     }
                 }
 
-                position = position + 1;
-                begin = position;
-                tempNode = rootNode;
-                sensitiveWord = new StringBuilder();
+
             } else {
                 sensitiveWord.append(c);
                 ++position;
